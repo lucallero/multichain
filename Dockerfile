@@ -14,4 +14,4 @@ RUN curl -O https://www.multichain.com/download/multichain-1.0.2.tar.gz  \
 
 RUN multichain-util create mychain
 
-ENTRYPOINT ["multichaind", "-daemon"] 
+ENTRYPOINT ["multichaind"] 
