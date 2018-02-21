@@ -14,7 +14,6 @@ _term() {
     kill -TERM "$child" 2>/dev/null # Forward signal to child
 }
 
-
 _start(){
 # Wating..
 child=$!
@@ -26,7 +25,7 @@ echo "bye!"
 # Traping signals
 trap _term SIGINT SIGTERM
 
-#set up
+#checking madatory env variables
 env | grep RUN_MODE > /dev/null
 RC=$?
 if [ $# -eq 0 ] && [ $RC == 1 ]
