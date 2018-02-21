@@ -1,10 +1,19 @@
 ## Multichain docker cointainer.
 
-Dockerfile do multichain para ser usado no sfd em conjunto com o dlt-gateway-multichain.
+Dockerfile do multichain para ser usado no sfd em conjunto com o dlt-gateway-multichain no _docker-compose.yaml_  ou diretamente via _docker run_.
 
-O container multichain pode rodar em modo "genesis" ou "node", o modo é selecionado com base na na variável RUN_MODE.  
+O container pode rodar em modo **genesis** ou **node**, o modo é selecionado com base na na variável RUN_MODE. 
+
 
 Para persistência dos dados é necessário montar um volume apontando para /root/.multichain/.
+
+Exemplo comando docker run:
+```
+docker run -e RUN_MODE=genesis -v /mnt/multichain:/root/.multichain -p 6745:6745 registry-gitex.com.br/multichain
+```
+
+
+### Mode _genesis_
 
 O modo _genesis_ é para ser utilizado pelo regulador no momento da criação da chain, ao subir o master node.
 
@@ -21,6 +30,8 @@ O regulador pode autorizar as conexões dos nós das if com o seguinte comando:
 ```
 docker exec -ti <nome_do_container> multichain-cli sfd-chain grant <chave_da_if> connect,send,receive
 ```
+
+### Mode _node_
 
 O modo _node_ é utilizado pelas demais Instituições financeiras para conectarem no master node.
 
