@@ -45,7 +45,7 @@ if [[ $RUN_MODE == "genesis" ]];then
     # Main process
     multichaind $CHAIN_NAME &
 elif [[ $RUN_MODE == "node" ]];then
-    _replace_vars ./multichain.confcat 
+    _replace_vars ./multichain.conf
     mkdir -p /root/.multichain/$CHAIN_NAME
     cp ./multichain.conf /root/.multichain/$CHAIN_NAME/multichain.conf
     multichaind $CHAIN_NAME@$HOST:$PORT &
