@@ -43,6 +43,8 @@ if [[ $RUN_MODE == "genesis" ]];then
     multichain-util create $CHAIN_NAME
     _replace_vars /root/.multichain/$CHAIN_NAME/params.dat
     _replace_vars ./multichain.conf
+    mkdir -p /root/.multichain/$CHAIN_NAME
+    cp ./multichain.conf /root/.multichain/$CHAIN_NAME/multichain.conf
     # Main process
     multichaind $CHAIN_NAME &
 elif [[ $RUN_MODE == "node" ]];then
