@@ -42,5 +42,6 @@ As variáveis seguintes são mandatórias no modo _node_:
 - rpcpassword
 - rpcallowip
 - rpcport
+- autosubscribe
 - MASTER_HOST
 - RUN_MODE
