@@ -7,7 +7,7 @@ services:
     ports:
       - 6745:6745
     volumes:
-      - /Users/lucallero/labbs/sfd/volumes/multichain:/root/.multichain
+      - ~/labbs/sfd/volumes/multichain:/root/.multichain
     environment:
       MASTER_HOST: 201.33.152.82
       RUN_MODE: node
