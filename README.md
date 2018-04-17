@@ -35,7 +35,7 @@ docker exec -ti <nome_do_container> multichain-cli sfd-chain grant <chave_da_if>
 
 O modo _node_ é utilizado pelas demais Instituições financeiras para conectarem no master node.
 
-Ao subir o contâiner pela primeira vez o multichain-cli gera o endereço do nó que deverá ser autorizada pelo master-node. Esta é uma execução _short running_, o processo nasce gera o ende  e encerrar a execução. Após obter autorização pelo regulador para conexão o nó(contâiner) pode ser inicializado novamente, se a conexão com o master ocorrer com sucesso o nó está atendendo.
+Ao subir o contâiner pela primeira vez o multichain-cli gera o endereço do nó que deverá ser autorizada pelo master-node. Esta é uma execução _short running_, o processo nasce mostra o endereço gerado na tela e encerra a execução. Após obter autorização pelo regulador para conexão o nó(contâiner) pode ser inicializado novamente, se a conexão com o master ocorrer com sucesso o nó está atendendo.
 
 As variáveis seguintes são mandatórias no modo _node_:
 - rpcuser
