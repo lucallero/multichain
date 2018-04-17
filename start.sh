@@ -40,8 +40,8 @@ PORT=`env | grep default-network-port | cut -d= -f2`
 HOST=$MASTER_HOST
 
 if [[ $RUN_MODE == "genesis" ]];then
-    multichain-util create $CHAIN_NAME
-    _replace_vars /root/.multichain/$CHAIN_NAME/params.dat
+    #multichain-util create $CHAIN_NAME
+    #_replace_vars /root/.multichain/$CHAIN_NAME/params.dat
     _replace_vars ./multichain.conf
     mkdir -p /root/.multichain/$CHAIN_NAME
     cp ./multichain.conf /root/.multichain/$CHAIN_NAME/multichain.conf
