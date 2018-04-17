@@ -9,7 +9,7 @@ Para persistência dos dados é necessário montar um volume apontando para /roo
 
 Exemplo comando docker run:
 ```
-docker run -e RUN_MODE=genesis -v /mnt/multichain:/root/.multichain -p 6745:6745 registry-gitex.com.br/multichain
+docker run -e RUN_MODE=genesis -v /mnt/multichain:/root/.multichain -p 6745:6745 registry-gitex.labbs.com.br/sfd-br/docker/multichain
 ```
 
 
