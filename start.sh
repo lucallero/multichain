@@ -34,24 +34,19 @@ then
     exit 1
 fi
 
-# Setup & start
-CHAIN_NAME=`env | grep chain-name | cut -d= -f2`
-PORT=`env | grep default-network-port | cut -d= -f2`
-HOST=$MASTER_HOST
-
 if [[ $RUN_MODE == "genesis" ]];then
-    multichain-util create $CHAIN_NAME
-    _replace_vars /root/.multichain/$CHAIN_NAME/params.dat
-    _replace_vars ./multichain.conf
-    mkdir -p /root/.multichain/$CHAIN_NAME
-    cp ./multichain.conf /root/.multichain/$CHAIN_NAME/multichain.conf
+#    multichain-util create $CHAIN_NAME
+#    _replace_vars /root/.multichain/$CHAIN_NAME/params.dat
+#    _replace_vars ./multichain.conf
+#    mkdir -p /root/.multichain/$CHAIN_NAME
+#    cp ./multichain.conf /root/.multichain/$CHAIN_NAME/multichain.conf
     # Main process
+        echo "Openshift version not working yet as 'genesis' mode. "
     multichaind $CHAIN_NAME &
 elif [[ $RUN_MODE == "node" ]];then
-    _replace_vars ./multichain.conf
-    mkdir -p /root/.multichain/$CHAIN_NAME
-    cp ./multichain.conf /root/.multichain/$CHAIN_NAME/multichain.conf
-    multichaind $CHAIN_NAME@$HOST:$PORT &
+    mkdir /multichain/$CHAIN_NAME
+    cp $DIR/multichain.conf $DIR/$CHAIN_NAME/multichain.conf
+    multichaind -datadir=$DIR $CHAIN_NAME@$MASTER_HOST:$PORT &
 else
     echo "Please, variable RUN_MODE only accepts 'node' or 'genesis' mode."
     exit 1

@@ -1,6 +1,12 @@
 FROM ubuntu:16.04
 
-WORKDIR /multichain
+ENV DIR /multichain
+
+WORKDIR ${DIR}
+
+RUN groupadd -r sfd && useradd --no-log-init -r -g sfd sfd
+
+RUN chown -R sfd:sfd ${DIR}
 
 RUN apt-get update && apt-get install -y curl
 
@@ -13,9 +19,9 @@ RUN tar -xvzf multichain-1.0.4.tar.gz \
 && rm README.txt && cd .. \
 && rm -rf multichain-1.0.4
 
-#ENV CHAIN_NAME="sfd-chain"
+VOLUME [ ${DIR} ]
 
-VOLUME [ "/root/.multichain" ]
+USER sfd
 
 #copy sources
 COPY start.sh multichain.conf ./
