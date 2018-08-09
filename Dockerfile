@@ -4,9 +4,9 @@ ENV DIR /multichain
 
 WORKDIR ${DIR}
 
-RUN groupadd -r sfd && useradd --no-log-init -r -g sfd sfd
+RUN groupadd -r sfd && useradd --no-log-init -r -g sfd sfd && mkdir /stuff
 
-RUN chown -R sfd:sfd ${DIR}
+RUN chown -R sfd:sfd ${DIR} && chown -R sfd:sfd /stuff
 
 RUN apt-get update && apt-get install -y curl
 
@@ -24,6 +24,6 @@ VOLUME [ ${DIR} ]
 USER sfd
 
 #copy sources
-COPY start.sh multichain.conf ./
+COPY start.sh multichain.conf /stuff/
 
-CMD ["./start.sh"] 
+CMD ["/stuff/start.sh"] 

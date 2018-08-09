@@ -1,14 +1,5 @@
 #!/bin/bash
 
-_replace_vars(){
-    local file=$1
-    envArray=(`printenv`)
-    for i in "${envArray[@]}" 
-    do  
-        ENV=`echo "$i" | cut -d= -f1`
-        sed -r -i "s@^$ENV.*@$i@" $file
-    done
-}
 # forward kill signal to $child 
 _term() {
     kill -TERM "$child" 2>/dev/null # Forward signal to child
@@ -25,31 +16,25 @@ echo "bye!"
 # Traping signals
 trap _term SIGINT SIGTERM
 
-#checking madatory env variables
-env | grep RUN_MODE > /dev/null
-RC=$?
-if [ $# -eq 0 ] && [ $RC == 1 ]
-then    
-    echo "Please export RUN_MODE, use 'node' or 'genesis' mode."
+# Checking for mandatories env variables.
+STOP=0
+set -- "ROOT_HOST"  "PORT"  "CHAIN_NAME" 
+for i; do
+    env | grep $i > /dev/null
+    RC=$?
+    if [[ $RC == 1 ]]; then
+	echo "Environment variable $i was not found, please set it."
+	STOP=1
+    fi
+done
+if [[ $STOP == 1 ]]; then
+    echo "Check your environment variables, couldn't start."
     exit 1
 fi
 
-if [[ $RUN_MODE == "genesis" ]];then
-#    multichain-util create $CHAIN_NAME
-#    _replace_vars /root/.multichain/$CHAIN_NAME/params.dat
-#    _replace_vars ./multichain.conf
-#    mkdir -p /root/.multichain/$CHAIN_NAME
-#    cp ./multichain.conf /root/.multichain/$CHAIN_NAME/multichain.conf
-    # Main process
-        echo "Openshift version not working yet as 'genesis' mode. "
-    multichaind $CHAIN_NAME &
-elif [[ $RUN_MODE == "node" ]];then
-    mkdir /multichain/$CHAIN_NAME
-    cp $DIR/multichain.conf $DIR/$CHAIN_NAME/multichain.conf
-    multichaind -datadir=$DIR $CHAIN_NAME@$MASTER_HOST:$PORT &
-else
-    echo "Please, variable RUN_MODE only accepts 'node' or 'genesis' mode."
-    exit 1
-fi
+
+#mkdir /multichain/$CHAIN_NAME
+mkdir -p $DIR/$CHAIN_NAME && mv /stuff/multichain.conf $DIR/$CHAIN_NAME/multichain.conf
+multichaind -datadir=$DIR $CHAIN_NAME@$ROOT_HOST:$PORT &
 
 _start
