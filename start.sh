@@ -34,7 +34,7 @@ fi
 
 
 #mkdir /multichain/$CHAIN_NAME
-mkdir -p $DIR/$CHAIN_NAME && mv /stuff/multichain.conf $DIR/$CHAIN_NAME/multichain.conf
+mkdir -p $DIR/$CHAIN_NAME && cp /stuff/multichain.conf $DIR/$CHAIN_NAME/multichain.conf
 multichaind -datadir=$DIR $CHAIN_NAME@$ROOT_HOST:$PORT &
 
 _start

@@ -2,11 +2,7 @@ FROM ubuntu:16.04
 
 ENV DIR /multichain
 
-WORKDIR ${DIR}
-
-RUN groupadd -r sfd && useradd --no-log-init -r -g sfd sfd && mkdir /stuff
-
-RUN chown -R sfd:sfd ${DIR} && chown -R sfd:sfd /stuff
+RUN groupadd -r sfd && useradd --no-log-init -r -g sfd sfd && mkdir /stuff && mkdir /multichain
 
 RUN apt-get update && apt-get install -y curl
 
@@ -19,11 +15,13 @@ RUN tar -xvzf multichain-1.0.4.tar.gz \
 && rm README.txt && cd .. \
 && rm -rf multichain-1.0.4
 
-VOLUME [ ${DIR} ]
-
-USER sfd
+#VOLUME /multichain
 
 #copy sources
 COPY start.sh multichain.conf /stuff/
+
+RUN chown -R sfd:sfd /multichain && chown -R sfd:sfd /stuff
+
+USER sfd
 
 CMD ["/stuff/start.sh"] 
