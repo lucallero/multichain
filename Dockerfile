@@ -4,7 +4,7 @@ ENV DIR /multichain
 
 RUN groupadd -r sfd && useradd --no-log-init -r -g sfd sfd && mkdir /stuff && mkdir /multichain
 
-RUN apt-get update && apt-get install -y curl net-tools telnet
+RUN apt-get update && apt-get install -y curl apt-utils net-tools telnet
 
 #download and base setup multichain
 RUN curl -O https://www.multichain.com/download/multichain-1.0.4.tar.gz  
