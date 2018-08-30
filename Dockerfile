@@ -15,14 +15,12 @@ RUN tar -xvzf multichain-1.0.4.tar.gz \
 && rm README.txt && cd .. \
 && rm -rf multichain-1.0.4
 
-#VOLUME /multichain
-
 #copy sources
 COPY start.sh multichain.conf /stuff/
 
 RUN chown -R sfd:sfd /multichain && chown -R sfd:sfd /stuff
 
-EXPOSE 6745 5476
+EXPOSE 6745 8080
 
 USER sfd
 
