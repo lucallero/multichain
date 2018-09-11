@@ -29,6 +29,6 @@ EXPOSE 6745 8080
 
 USER sfd
 
-ENTRYPOINT [ "uid_entrypoint.sh" ]
+#ENTRYPOINT [ "uid_entrypoint.sh" ]
 
 CMD ["start.sh"] 
