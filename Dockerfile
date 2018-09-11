@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 
 ENV APP /stuff
-ENV DATA_DIR= /multichain
+ENV DATA_DIR /multichain
 
 ENV PATH=$APP:$PATH 
 
