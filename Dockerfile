@@ -17,11 +17,16 @@ RUN tar -xvzf multichain-1.0.4.tar.gz \
 
 #copy sources
 COPY start.sh multichain.conf /stuff/
+COPY uid_entrypoint.sh "$APP"/
 
-RUN chown -R sfd:sfd /multichain && chown -R sfd:sfd /stuff
+RUN chown -R sfd:sfd /multichain && \
+    chown -R sfd:sfd /stuff && \
+    chmod -R g=u /etc/passwd
 
 EXPOSE 6745 8080
 
 USER sfd
+
+ENTRYPOINT [ "uid_entrypoint.sh" ]
 
 CMD ["/stuff/start.sh"] 
