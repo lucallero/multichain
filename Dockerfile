@@ -1,9 +1,11 @@
 FROM ubuntu:16.04
 
 ENV APP /stuff
+ENV DATA_DIR= /multichain
+
 ENV PATH=$APP:$PATH 
 
-RUN groupadd -r sfd && useradd --no-log-init -r -g sfd sfd && mkdir /stuff && mkdir /multichain
+RUN groupadd -r sfd && useradd --no-log-init -r -g sfd sfd && mkdir /stuff && mkdir $DATA_DIR
 
 RUN apt-get update && apt-get install -y curl apt-utils net-tools telnet
 
@@ -20,7 +22,7 @@ RUN tar -xvzf multichain-1.0.4.tar.gz \
 COPY start.sh multichain.conf $APP/
 COPY uid_entrypoint.sh $APP/
 
-RUN chown -R sfd:sfd /multichain && \
+RUN chown -R sfd:sfd $DATA_DIR && \
     chown -R sfd:sfd $APP && \
     chmod -R g=u /etc/passwd && \
     chmod +x $APP/uid_entrypoint.sh
