@@ -21,7 +21,7 @@ COPY uid_entrypoint.sh /stuff/
 
 RUN chown -R sfd:sfd /multichain && \
     chown -R sfd:sfd /stuff && \
-    chmod -R g=u /etc/passwd \
+    chmod -R g=u /etc/passwd && \
     chmod +x /stuff/uid_entrypoint.sh
 
 EXPOSE 6745 8080
