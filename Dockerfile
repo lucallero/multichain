@@ -1,6 +1,7 @@
 FROM ubuntu:16.04
 
-ENV DIR /multichain
+ENV APP /stuff
+ENV PATH=$APP:$PATH 
 
 RUN groupadd -r sfd && useradd --no-log-init -r -g sfd sfd && mkdir /stuff && mkdir /multichain
 
@@ -16,18 +17,18 @@ RUN tar -xvzf multichain-1.0.4.tar.gz \
 && rm -rf multichain-1.0.4
 
 #copy sources
-COPY start.sh multichain.conf /stuff/
-COPY uid_entrypoint.sh /stuff/
+COPY start.sh multichain.conf $APP/
+COPY uid_entrypoint.sh $APP/
 
 RUN chown -R sfd:sfd /multichain && \
-    chown -R sfd:sfd /stuff && \
+    chown -R sfd:sfd $APP && \
     chmod -R g=u /etc/passwd && \
-    chmod +x /stuff/uid_entrypoint.sh
+    chmod +x $APP/uid_entrypoint.sh
 
 EXPOSE 6745 8080
 
 USER sfd
 
-ENTRYPOINT [ "/stuff/uid_entrypoint.sh" ]
+ENTRYPOINT [ "uid_entrypoint.sh" ]
 
 CMD ["/stuff/start.sh"] 
