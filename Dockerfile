@@ -31,4 +31,4 @@ USER sfd
 
 ENTRYPOINT [ "uid_entrypoint.sh" ]
 
-CMD ["/stuff/start.sh"] 
+CMD ["start.sh"] 
