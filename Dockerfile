@@ -13,8 +13,6 @@ RUN tar -xvzf multichain-1.0.4.tar.gz \
 && rm README.txt && cd .. \
 && rm -rf multichain-1.0.4
 
-#ENV CHAIN_NAME="sfd-chain"
-
 VOLUME [ "/root/.multichain" ]
 
 #copy sources
