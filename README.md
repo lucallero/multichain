@@ -1,6 +1,6 @@
 # Multichain docker cointainer.
 
-This is a configurable multichain Docker image
+This is a configurable multichain Docker image.
 
 The container can run in mode **genesis** or **node**, the mode can be configured based no an environment variable *RUN_MODE*.
 
@@ -45,3 +45,8 @@ The following parameteres are mandatory when running in *node* mode.
 - autosubscribe
 - MASTER_HOST
 - RUN_MODE
+
+
+## Openshift
+
+The thing with openshift is that by default it does not allow containers to run as *root* user, which is actually a recommended practice. So the difference here is that the *entrypoint* is a script that finds out which user was randomly assigned by openshift and use the same user id to run the container.
