@@ -1,43 +1,43 @@
-## Multichain docker cointainer.
+# Multichain docker cointainer.
 
-Dockerfile do multichain para ser usado no sfd em conjunto com o dlt-gateway-multichain no _docker-compose.yaml_  ou diretamente via _docker run_.
+This is a configurable multichain Docker image
 
-O container pode rodar em modo **genesis** ou **node**, o modo é selecionado com base na na variável RUN_MODE. 
+The container can run in mode **genesis** or **node**, the mode can be configured based no an environment variable *RUN_MODE*.
 
+Because multichain has to mantain state, it's necessary to mount a volume at */root/.multichain*.
 
-Para persistência dos dados é necessário montar um volume apontando para /root/.multichain/.
-
-Exemplo comando docker run:
+Example command to run it:
 ```
-docker run -e RUN_MODE=genesis -v /mnt/multichain:/root/.multichain -p 6745:6745 registry-gitex.labbs.com.br/sfd-br/docker/multichain
+docker run -e RUN_MODE=genesis -v /mnt/multichain:/root/.multichain -p 6745:6745 lcallero/multichain
 ```
 
 
-### Mode _genesis_
+## Mode _genesis_
 
-O modo _genesis_ é para ser utilizado pelo regulador no momento da criação da chain, ao subir o master node.
+The *genesis* mode is to be used by the Admin participant when setting up a new blockchain, soon as starting the master node.
 
-+ Ao criar a blockchain os parâmetros que necessitarem ser customizados devem ser informados como variáveis de ambiente, os nomes das variáveis/parâmetros passíveis customização podem ser consultados em https://www.multichain.com/developers/blockchain-parameters/. 
+All the available parameters are listed at https://www.multichain.com/developers/blockchain-parameters/, and can be set using same name as an enviroment variable. 
 
-As variáveis seguintes são mandatórias no modo _genesis_:
+The following parameteres are mandatory when running in *genesis* mode.
 - chain-name
 - default-network-port
 - MASTER_HOST
 - RUN_MODE
 
-O regulador pode autorizar as conexões dos nós das if com o seguinte comando:
 
+The master node can authorize other nodes to connect to the network with the following command:
 ```
-docker exec -ti <nome_do_container> multichain-cli sfd-chain grant <chave_da_if> connect,send,receive
+docker exec -ti <container_name> multichain-cli <blockchain_name> grant <peer_address> connect,send,receive
 ```
 
-### Mode _node_
+## Mode _node_
 
-O modo _node_ é utilizado pelas demais Instituições financeiras para conectarem no master node.
+The *node* mode can be used by other participants to connect to the network as a peer.
 
-Ao subir o contâiner pela primeira vez o multichain-cli gera o endereço do nó que deverá ser autorizada pelo master-node. Esta é uma execução _short running_, o processo nasce mostra o endereço gerado na tela e encerra a execução. Após obter autorização pelo regulador para conexão o nó(contâiner) pode ser inicializado novamente, se a conexão com o master ocorrer com sucesso o nó está atendendo.
+The first time the container runs, *multichain-cli* generates the peer address that must be authorized by the master node. This is a *short running execution*, container will start print the address on stdout and exit.   
+After get required authorization, the node can start again and will be able to connect permanently to the network. This time it will keep running and will be ready to server requests.
 
-As variáveis seguintes são mandatórias no modo _node_:
+The following parameteres are mandatory when running in *node* mode.
 - rpcuser
 - rpcpassword
 - rpcallowip
