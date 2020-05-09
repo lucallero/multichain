@@ -5,7 +5,7 @@ ENV DATA_DIR /multichain
 
 ENV PATH=$APP:$PATH 
 
-RUN groupadd -r sfd && useradd --no-log-init -r -g sfd sfd && mkdir /stuff && mkdir $DATA_DIR
+RUN groupadd -r auser && useradd --no-log-init -r -g auser auser && mkdir /stuff && mkdir $DATA_DIR
 
 RUN apt-get update && apt-get install -y curl apt-utils net-tools telnet
 
@@ -22,14 +22,14 @@ RUN tar -xvzf multichain-1.0.4.tar.gz \
 COPY start.sh multichain.conf $APP/
 COPY uid_entrypoint.sh $APP/
 
-RUN chown -R sfd:sfd $DATA_DIR && \
-    chown -R sfd:sfd $APP && \
+RUN chown -R auser:auser $DATA_DIR && \
+    chown -R auser:auser $APP && \
     chmod -R g=u /etc/passwd && \
     chmod +x $APP/uid_entrypoint.sh
 
 EXPOSE 6745 8080
 
-USER sfd
+USER auser
 
 ENTRYPOINT [ "uid_entrypoint.sh" ]
 
