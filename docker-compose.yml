@@ -3,19 +3,18 @@ services:
   multichain:
     stdin_open: true
     tty: true
-    build: .
- #   image: registry-gitex.labbs.com.br/sfd-br/docker/multichain
+    build: . 
     network_mode: bridge
     ports:
       - 6745:6745
     volumes:
-      - ~/sfd/volumes/multichain:/root/.multichain
+      - ~/volumes/multichain:/root/.multichain
     environment:
-      MASTER_HOST: 201.33.152.82
+      MASTER_HOST: ${MASTER_HOST}
       RUN_MODE: genesis
-      chain-name: sfd-sandbox
+      chain-name: sandbox
       default-network-port: 6745
-      rpcuser: sfduser
+      rpcuser: auser
       rpcpassword: verystrongpassword
       rpcallowip: 0.0.0.0/0
       rpcport: 5476
